@@ -1,1 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CrickCast Live – India vs Afghanistan | HPCA Dharamshala</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#070b10;
+  --border:#1c2734;
+  --ind:#1565C0;
+  --ind-saffron:#FF6F00;
+  --afg-red:#D32D2D;
+  --afg-green:#1A8C4A;
+  --afg-black:#15191c;
+  --snow:#dfe9f2;
+  --pine:#1c4d33;
+  --gold:#f0b429;
+  --text:#eef2f7;
+  --muted:#5a7080;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden}
 
+/* Mountain backdrop wash */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 55% 30% at 20% 0%, rgba(21,101,192,.10) 0%,transparent 65%),
+    radial-gradient(ellipse 55% 30% at 80% 0%, rgba(26,140,74,.09) 0%,transparent 65%),
+    radial-gradient(ellipse 70% 25% at 50% 100%, rgba(28,77,51,.08) 0%,transparent 70%),
+    repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,.012) 80px,rgba(255,255,255,.012) 81px),
+    repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(255,255,255,.012) 80px,rgba(255,255,255,.012) 81px);
+  pointer-events:none;z-index:0
+}
+
+/* Subtle mountain silhouette band along top of page */
+.mountain-band{
+  position:relative;z-index:1;height:46px;width:100%;
+  background:
+    linear-gradient(180deg,rgba(223,233,242,.06),transparent),
+    repeating-linear-gradient(115deg, transparent 0 60px, rgba(223,233,242,.035) 60px 120px);
+  border-bottom:1px solid var(--border);
+  clip-path:polygon(0% 100%,0% 40%,6% 10%,12% 55%,20% 5%,28% 60%,36% 20%,45% 70%,55% 15%,64% 55%,73% 8%,82% 60%,90% 25%,100% 70%,100% 100%);
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(7,11,16,.97);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:0 1.5rem;height:62px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-left{display:flex;align-items:center;gap:10px}
+.logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--gold);letter-spacing:1px;display:flex;align-items:center;gap:8px}
+.live-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:linear-gradient(135deg,#b71c1c,#e53935);
+  color:#fff;font-size:9px;font-weight:800;
+  padding:4px 10px;border-radius:20px;letter-spacing:2px;
+  animation:blink 1.4s ease-in-out infinite;
+  box-shadow:0 0 14px rgba(229,57,53,.5);
+  font-family:'Barlow Condensed',sans-serif;
+}
+.live-dot{width:5px;height:5px;background:#fff;border-radius:50%;animation:pulse 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.6}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+.tg-btn{
+  background:linear-gradient(135deg,#0088cc,#005f8e);
+  color:#fff;padding:8px 16px;border-radius:6px;
+  font-size:13px;font-weight:600;text-decoration:none;
+  border:1px solid rgba(0,136,204,.3);
+  transition:all .25s;display:flex;align-items:center;gap:6px;
+  font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;
+}
+.tg-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,136,204,.4)}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:5;
+  background:linear-gradient(160deg,#0a1320 0%,#070c11 35%,#04090c 100%);
+  border-bottom:1px solid var(--border);
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(110deg,rgba(21,101,192,.14) 0%,transparent 42%),
+    linear-gradient(250deg,rgba(26,140,74,.10) 0%,transparent 42%),
+    linear-gradient(180deg,rgba(255,215,0,.04) 0%,transparent 50%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;
+  top:0;left:-120%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.018),transparent);
+  animation:shimmer 6s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes shimmer{0%{left:-120%}100%{left:160%}}
+
+.hero-content{position:relative;max-width:960px;margin:0 auto;padding:2rem 1.5rem 1.5rem}
+
+.series-badge{display:flex;justify-content:center;margin-bottom:1.4rem;animation:fadeDown .5s ease both}
+.series-inner{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(240,180,41,.07);
+  border:1px solid rgba(240,180,41,.22);
+  border-radius:20px;padding:6px 18px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;color:var(--gold);
+  letter-spacing:2.5px;text-transform:uppercase;
+}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+
+.teams-row{display:flex;align-items:center;justify-content:center}
+.team-block{display:flex;flex-direction:column;align-items:center;gap:14px;flex:1}
+
+.logo-ring{position:relative;animation:fadeUp .7s ease both}
+.logo-ring.ind-ring{animation-delay:.1s}
+.logo-ring.afg-ring{animation-delay:.3s}
+
+.logo-outer{
+  width:104px;height:104px;border-radius:50%;
+  padding:4px;display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.ind-ring .logo-outer{
+  background:conic-gradient(from 0deg,#FF6F00,#ffffff,#1565C0,#ffffff,#FF6F00);
+  box-shadow:0 0 38px rgba(21,101,192,.35),0 0 80px rgba(255,111,0,.1);
+  animation:spinRing 9s linear infinite;
+}
+.afg-ring .logo-outer{
+  background:conic-gradient(from 0deg,#D32D2D,#15191c,#1A8C4A,#15191c,#D32D2D);
+  box-shadow:0 0 38px rgba(211,45,45,.32),0 0 80px rgba(26,140,74,.12);
+  animation:spinRing 9s linear infinite reverse;
+}
+@keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.logo-inner{
+  width:94px;height:94px;border-radius:50%;
+  background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  padding:14px;
+}
+.logo-inner svg{width:100%;height:100%}
+
+.status-dot{
+  position:absolute;bottom:4px;right:4px;
+  width:13px;height:13px;background:#00e676;border-radius:50%;
+  border:2px solid var(--bg);
+  box-shadow:0 0 10px #00e676;animation:pulse 2s infinite;
+}
+
+.team-name-row{display:flex;align-items:center;justify-content:center}
+.team-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.65rem;font-weight:800;
+  letter-spacing:3px;text-transform:uppercase;
+  animation:fadeUp .7s ease both;
+}
+.ind-name{
+  color:transparent;
+  background:linear-gradient(135deg,#FF6F00 0%,#42a5f5 55%,#fff 100%);
+  -webkit-background-clip:text;background-clip:text;
+  animation-delay:.15s;
+}
+.afg-name{
+  color:transparent;
+  background:linear-gradient(135deg,#D32D2D 0%,#cfd6da 50%,#1A8C4A 100%);
+  -webkit-background-clip:text;background-clip:text;
+  animation-delay:.35s;
+}
+.team-sub{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:500;color:var(--muted);
+  letter-spacing:3px;text-transform:uppercase;
+  animation:fadeUp .7s ease both;
+}
+.ind-block .team-sub{animation-delay:.2s}
+.afg-block .team-sub{animation-delay:.4s}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.vs-center{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:0 2.5rem;
+  animation:fadeUp .6s ease both;animation-delay:.2s
+}
+.vs-circle{
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#0e1a28,#080d14);
+  border:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:900;color:#dde8ee;
+  letter-spacing:1px;
+  box-shadow:0 0 24px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.05);
+  position:relative;
+}
+.vs-circle::before{
+  content:'';position:absolute;inset:-2px;border-radius:50%;
+  background:conic-gradient(from 0deg,rgba(21,101,192,.6),rgba(211,45,45,.5),rgba(26,140,74,.5),rgba(21,101,192,.6));
+  z-index:-1;animation:spinRing 5s linear infinite;
+}
+.format-badge{
+  background:linear-gradient(135deg,rgba(240,180,41,.15),rgba(240,180,41,.05));
+  border:1px solid rgba(240,180,41,.3);
+  color:var(--gold);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px;font-weight:700;
+  padding:4px 12px;border-radius:20px;
+  letter-spacing:3px;text-transform:uppercase;
+}
+
+.venue-strip{
+  border-top:1px solid rgba(255,255,255,.04);
+  margin-top:1.6rem;padding-top:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  gap:1rem;flex-wrap:wrap;
+  animation:fadeUp .7s ease both;animation-delay:.5s
+}
+.venue-item{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:600;color:#7a9aaa;letter-spacing:.8px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:6px;padding:7px 15px;
+  transition:border-color .2s;
+}
+.venue-item:hover{border-color:rgba(255,215,0,.15)}
+.venue-item .icon{font-size:14px}
+
+/* ── INFO BAR ── */
+.info-bar{max-width:960px;margin:.9rem auto;padding:0 1rem;position:relative;z-index:5}
+.info-inner{
+  background:linear-gradient(135deg,#0c1219,#070b0f);
+  border:1px solid var(--border);
+  border-radius:10px;padding:.85rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+}
+.info-item{display:flex;flex-direction:column;align-items:center;gap:3px;font-family:'Barlow Condensed',sans-serif}
+.info-label{font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.info-val{font-size:14px;font-weight:700;color:var(--text);letter-spacing:.5px}
+.info-divider{width:1px;height:34px;background:var(--border)}
+
+/* ── PLAYER ── */
+.player-wrap{max-width:960px;margin:1rem auto;padding:0 1rem;position:relative;z-index:5}
+.player-card{
+  border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:0 16px 60px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.02);
+  position:relative;
+}
+.player-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    #FF6F00 12%,
+    #42a5f5 28%,
+    #fff 38%,
+    var(--gold) 50%,
+    #D32D2D 62%,
+    #1A8C4A 78%,
+    #15191c 88%,
+    transparent 100%);
+  z-index:10;
+}
+.player-card iframe{width:100%;height:520px;border:none;display:block;background:#000}
+
+.player-footer{
+  background:linear-gradient(135deg,#0c1219,#070b0f);
+  padding:12px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border);
+  flex-wrap:wrap;gap:10px;
+}
+.pf-left{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-weight:500;letter-spacing:.5px}
+.pf-dot{width:8px;height:8px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:pulse 2s infinite;flex-shrink:0}
+.pf-left strong{color:#00e676}
+.badges{display:flex;gap:6px}
+.badge{font-size:10px;font-weight:700;padding:4px 11px;border-radius:4px;letter-spacing:1.5px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif}
+.badge-hd{background:linear-gradient(135deg,#1a3a22,#0f2418);color:#66bb6a;border:1px solid rgba(102,187,106,.25)}
+.badge-odi{background:linear-gradient(135deg,rgba(0,63,140,.2),rgba(0,63,140,.1));color:#90caf9;border:1px solid rgba(66,165,245,.25)}
+.badge-live{background:linear-gradient(135deg,#3a0808,#1f0404);color:#ef5350;border:1px solid rgba(239,83,80,.3);animation:blink 2s infinite}
+
+/* ── CHANNEL SELECTOR ── */
+.channel-bar{max-width:960px;margin:0 auto 1rem;padding:0 1rem;position:relative;z-index:5}
+.channel-inner{
+  background:linear-gradient(135deg,#0c1219,#070b0f);
+  border:1px solid var(--border);
+  border-radius:10px;padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+}
+.channel-label{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;color:var(--muted);
+  letter-spacing:2.5px;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+}
+.channel-label .icon{font-size:16px}
+.channel-select-wrap{position:relative;flex:1;max-width:340px;min-width:220px}
+.channel-select{
+  width:100%;
+  background:linear-gradient(135deg,#10181f,#0a0f14);
+  border:1px solid var(--border);
+  color:var(--text);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.5px;
+  padding:11px 38px 11px 14px;
+  border-radius:7px;
+  appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  cursor:pointer;
+  transition:border-color .2s, box-shadow .2s;
+}
+.channel-select:hover{border-color:rgba(240,180,41,.35)}
+.channel-select:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(240,180,41,.15);
+}
+.channel-select-wrap::after{
+  content:'▾';position:absolute;right:14px;top:50%;
+  transform:translateY(-50%);
+  color:var(--gold);font-size:13px;pointer-events:none;
+}
+.channel-tags{display:flex;gap:6px;flex-wrap:wrap}
+.ctag{
+  font-size:10px;font-weight:700;padding:5px 11px;border-radius:20px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'Barlow Condensed',sans-serif;
+  border:1px solid rgba(255,255,255,.08);
+  color:#7a9aaa;background:rgba(255,255,255,.02);
+}
+.ctag.active{
+  color:var(--gold);border-color:rgba(240,180,41,.35);
+  background:rgba(240,180,41,.08);
+}
+
+/* ── TELEGRAM ── */
+.tg-promo{max-width:960px;margin:0 auto 1.5rem;padding:0 1rem;position:relative;z-index:5}
+.tg-inner{
+  background:linear-gradient(135deg,#0c1219,#070b0f);
+  border:1px solid var(--border);
+  border-left:3px solid #0088cc;
+  border-radius:10px;
+  padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+  position:relative;overflow:hidden;
+}
+.tg-inner::after{
+  content:'📲';position:absolute;right:16px;top:50%;
+  transform:translateY(-50%);
+  font-size:52px;opacity:.05;pointer-events:none;
+}
+.tg-text .t1{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;color:var(--gold);font-weight:700;letter-spacing:.5px}
+.tg-text .t2{font-size:12px;color:var(--muted);margin-top:3px}
+.tg-join{
+  background:linear-gradient(135deg,#0088cc,#005f8e);
+  color:#fff;font-weight:700;
+  padding:10px 22px;border-radius:7px;
+  font-size:14px;text-decoration:none;white-space:nowrap;
+  transition:all .25s;border:1px solid rgba(0,136,204,.3);
+  font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;
+}
+.tg-join:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,136,204,.4)}
+
+/* ── STADIUM STRIP ── */
+.stadium-strip{max-width:960px;margin:0 auto 1.5rem;padding:0 1rem;position:relative;z-index:5}
+.stadium-inner{
+  background:linear-gradient(135deg,#0c1219,#070b0f);
+  border:1px solid var(--border);
+  border-radius:10px;padding:1.1rem 1.4rem;
+  display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;
+}
+.stadium-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(28,77,51,.25),rgba(21,101,192,.15));
+  border:1px solid rgba(223,233,242,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.stadium-text .s1{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--snow);letter-spacing:.5px}
+.stadium-text .s2{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:5;
+  text-align:center;padding:1.2rem;
+  font-size:11px;color:#2a3540;
+  border-top:1px solid var(--border);
+  font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;
+}
+footer a{color:var(--afg-green);text-decoration:none}
+footer a:hover{color:var(--gold)}
+
+@media(max-width:600px){
+  .player-card iframe{height:220px}
+  .team-name{font-size:1.2rem}
+  .logo-outer{width:78px;height:78px}
+  .logo-inner{width:70px;height:70px}
+  .vs-center{padding:0 1rem}
+  .venue-strip{gap:.7rem}
+  .info-inner{justify-content:center;gap:.7rem}
+  .channel-inner{flex-direction:column;align-items:stretch}
+  .channel-select-wrap{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="mountain-band"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <span class="logo">🏏 CrickCast</span>
+    <span class="live-pill"><span class="live-dot"></span>LIVE</span>
+  </div>
+  <a href="https://t.me/addlist/6qALMSdKoVVkNWI1" target="_blank" class="tg-btn">📲 Telegram</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+
+    <div class="series-badge">
+      <div class="series-inner">🏆 India vs Afghanistan · ODI Series 2025</div>
+    </div>
+
+    <div class="teams-row">
+
+      <!-- INDIA -->
+      <div class="team-block ind-block">
+        <div class="logo-ring ind-ring">
+          <div class="logo-outer">
+            <div class="logo-inner">
+              <!-- India crest (Ashoka chakra inspired) -->
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" fill="#fff" stroke="#1565C0" stroke-width="3"/>
+                <circle cx="50" cy="50" r="34" fill="none" stroke="#1565C0" stroke-width="2.5"/>
+                <circle cx="50" cy="50" r="6" fill="#1565C0"/>
+                <g stroke="#1565C0" stroke-width="2.5">
+                  <line x1="50" y1="16" x2="50" y2="28"/>
+                  <line x1="50" y1="72" x2="50" y2="84"/>
+                  <line x1="16" y1="50" x2="28" y2="50"/>
+                  <line x1="72" y1="50" x2="84" y2="50"/>
+                  <line x1="26.6" y1="26.6" x2="34.7" y2="34.7"/>
+                  <line x1="65.3" y1="65.3" x2="73.4" y2="73.4"/>
+                  <line x1="73.4" y1="26.6" x2="65.3" y2="34.7"/>
+                  <line x1="34.7" y1="65.3" x2="26.6" y2="73.4"/>
+                  <line x1="50" y1="22" x2="50" y2="78" transform="rotate(15 50 50)"/>
+                  <line x1="50" y1="22" x2="50" y2="78" transform="rotate(45 50 50)"/>
+                  <line x1="50" y1="22" x2="50" y2="78" transform="rotate(75 50 50)"/>
+                  <line x1="50" y1="22" x2="50" y2="78" transform="rotate(105 50 50)"/>
+                  <line x1="50" y1="22" x2="50" y2="78" transform="rotate(135 50 50)"/>
+                  <line x1="50" y1="22" x2="50" y2="78" transform="rotate(165 50 50)"/>
+                </g>
+                <path d="M50 4 L56 14 L44 14 Z" fill="#FF6F00"/>
+                <path d="M50 96 L56 86 L44 86 Z" fill="#1A8C4A"/>
+              </svg>
+            </div>
+          </div>
+          <div class="status-dot"></div>
+        </div>
+        <div class="team-name-row">
+          <div class="team-name ind-name">India</div>
+        </div>
+        <div class="team-sub">Men in Blue</div>
+      </div>
+
+      <!-- VS -->
+      <div class="vs-center">
+        <div class="vs-circle">VS</div>
+        <div class="format-badge">ODI</div>
+      </div>
+
+      <!-- AFGHANISTAN -->
+      <div class="team-block afg-block">
+        <div class="logo-ring afg-ring">
+          <div class="logo-outer">
+            <div class="logo-inner">
+              <!-- Afghanistan crest (star + crescent inspired) -->
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" fill="#fff" stroke="#D32D2D" stroke-width="3"/>
+                <circle cx="50" cy="50" r="34" fill="none" stroke="#1A8C4A" stroke-width="2.5"/>
+                <path d="M62 30 A22 22 0 1 0 62 70 A17 17 0 1 1 62 30 Z" fill="#1A8C4A"/>
+                <path d="M50 36 L53 44 L62 44 L55 49 L57 58 L50 53 L43 58 L45 49 L38 44 L47 44 Z" fill="#D32D2D"/>
+              </svg>
+            </div>
+          </div>
+          <div class="status-dot"></div>
+        </div>
+        <div class="team-name-row">
+          <div class="team-name afg-name">Afghanistan</div>
+        </div>
+        <div class="team-sub">The Lions</div>
+      </div>
+
+    </div>
+
+    <div class="venue-strip">
+      <div class="venue-item"><span class="icon">🏟️</span> Himachal Pradesh Cricket Association Stadium</div>
+      <div class="venue-item"><span class="icon">🏔️</span> Dharamshala, Himachal Pradesh, India</div>
+      <div class="venue-item"><span class="icon">🌤️</span> Day Match</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- INFO BAR -->
+<div class="info-bar">
+  <div class="info-inner">
+    <div class="info-item">
+      <span class="info-label">Series</span>
+      <span class="info-val">IND vs AFG</span>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-item">
+      <span class="info-label">Format</span>
+      <span class="info-val">ODI</span>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-item">
+      <span class="info-label">Venue</span>
+      <span class="info-val">Dharamshala</span>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-item">
+      <span class="info-label">Status</span>
+      <span class="info-val" style="color:#00e676">🟢 Live Now</span>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-item">
+      <span class="info-label">Stream</span>
+      <span class="info-val">HD · Free</span>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-item">
+      <span class="info-label">Channel</span>
+      <span class="info-val">CrickCast</span>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYER -->
+<div class="player-wrap">
+  <div class="player-card">
+    <iframe
+      id="streamFrame"
+      src=""
+      allowfullscreen
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture">
+    </iframe>
+    <div class="player-footer">
+      <div class="pf-left">
+        <span class="pf-dot"></span>
+        Streaming on <strong>CrickCast</strong> &nbsp;·&nbsp; <span id="footerChannelName">Select a channel</span>
+      </div>
+      <div class="badges">
+        <span class="badge badge-live">● LIVE</span>
+        <span class="badge badge-odi">ODI</span>
+        <span class="badge badge-hd">HD</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHANNEL SELECTOR -->
+<div class="channel-bar">
+  <div class="channel-inner">
+    <div class="channel-label"><span class="icon">📡</span> Select Channel</div>
+    <div class="channel-select-wrap">
+      <select id="channelSelect" class="channel-select" onchange="switchChannel()">
+        <option value="" disabled selected>— Choose a broadcast feed —</option>
+        <option value="ch1" data-name="Star Sports Hindi" data-src="">Star Sports Hindi — Hindi Commentary</option>
+        <option value="ch2" data-name="Star Sports English" data-src="">Star Sports English — English Commentary</option>
+        <option value="ch3" data-name="Star Sports 2 Hindi" data-src="">Star Sports 2 Hindi — Hindi Commentary</option>
+        <option value="ch4" data-name="Willow English" data-src="">Willow English — English Commentary</option>
+        <option value="ch5" data-name="Backup Server 1" data-src="">Backup Server 1 — Multi-language</option>
+      </select>
+    </div>
+    <div class="channel-tags">
+      <span class="ctag active">HD</span>
+      <span class="ctag">Hindi</span>
+      <span class="ctag">English</span>
+      <span class="ctag">Backup Servers</span>
+    </div>
+  </div>
+</div>
+
+<!-- STADIUM INFO -->
+<div class="stadium-strip">
+  <div class="stadium-inner">
+    <div class="stadium-icon">🏔️</div>
+    <div class="stadium-text">
+      <div class="s1">HPCA Stadium — The Highest Cricket Venue Backdrop in the World</div>
+      <div class="s2">Nestled in the foothills of the Dhauladhar mountain range, the Himachal Pradesh Cricket Association Stadium in Dharamshala offers one of cricket's most scenic settings — snow-capped peaks framing the outfield on a clear day.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TELEGRAM -->
+<div class="tg-promo">
+  <div class="tg-inner">
+    <div class="tg-text">
+      <div class="t1">📲 Get Live Stream Links on Telegram — Free!</div>
+      <div class="t2">Instant stream links, score alerts & match updates. Join thousands of cricket fans.</div>
+    </div>
+    <a href="https://t.me/addlist/6qALMSdKoVVkNWI1" target="_blank" class="tg-join">Join Now →</a>
+  </div>
+</div>
+
+<footer>
+  © 2025 CrickCast &nbsp;·&nbsp; Demo template — add your own licensed stream sources in the channel selector &nbsp;·&nbsp;
+  <a href="https://t.me/addlist/6qALMSdKoVVkNWI1" target="_blank">Telegram Channel</a>
+</footer>
+
+<script>
+function switchChannel(){
+  const sel = document.getElementById('channelSelect');
+  const opt = sel.options[sel.selectedIndex];
+  const src = opt.getAttribute('data-src');
+  const name = opt.getAttribute('data-name');
+  const frame = document.getElementById('streamFrame');
+  const footerName = document.getElementById('footerChannelName');
+
+  footerName.textContent = name;
+
+  if(src && src.trim() !== ''){
+    frame.src = src;
+  } else {
+    // Placeholder: no source configured for this channel yet
+    frame.removeAttribute('src');
+    frame.srcdoc = `
+      <html>
+        <body style="margin:0;height:100vh;display:flex;align-items:center;justify-content:center;
+          background:#05080b;color:#7a9aaa;font-family:sans-serif;text-align:center;padding:20px;">
+          <div>
+            <div style="font-size:40px;margin-bottom:10px;">📡</div>
+            <div style="font-size:16px;font-weight:600;color:#eef2f7;margin-bottom:6px;">${name}</div>
+            <div style="font-size:13px;">No stream source configured for this channel.<br/>Add a licensed stream URL in the channel selector.</div>
+          </div>
+        </body>
+      </html>`;
+  }
+}
+</script>
+
+</body>
+</html>
